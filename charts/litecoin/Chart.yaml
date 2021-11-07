@@ -1,0 +1,6 @@
+apiVersion: v0.18
+appVersion: "0.18.1"
+description: Litecoin Helm chart
+name: litecoin
+version: 0.18.1
+

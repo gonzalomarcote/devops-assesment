@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: litecoin
+  labels:
+    app: litecoin
+spec:
+  ports:
+  - port: {{ .Values.service.externalPort1 }}
+    targetPort: {{ .Values.service.internalPort1 }}
+  - port: {{ .Values.service.externalPort2 }}
+    targetPort: {{ .Values.service.internalPort2 }}
+  - port: {{ .Values.service.externalPort3 }}
+    targetPort: {{ .Values.service.internalPort3 }}
+  - port: {{ .Values.service.externalPort4 }}
+    targetPort: {{ .Values.service.internalPort4 }}
+  - port: {{ .Values.service.externalPort5 }}
+    targetPort: {{ .Values.service.internalPort5 }}
+  selector:
+    app: litecoin
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: litecoin
+spec:
+  serviceName: "litecoin"
+  replicas: {{ .Values.statefulset.replicas }}
+  selector:
+    matchLabels:
+      app: litecoin
+  template:
+    metadata:
+      labels:
+        app: litecoin
+    spec:
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: {{ .Values.statefulset.imagePullSecrets }}
+      containers:
+      - name: {{ .Values.statefulset.containerName }}
+        image: {{ .Values.statefulset.image }}:{{ .Values.statefulset.tag }}
+        imagePullPolicy: {{ .Values.statefulset.pullPolicy }}
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: {{ .Values.statefulset.containerPort1 }}
+          name: {{ .Values.statefulset.containerPortName1 }}
+        - containerPort: 9333
+          name: port-9333
+        - containerPort: 19332
+          name: port-19332
+        - containerPort: 19333
+          name: port-19333
+        - containerPort: 19444
+          name: port-19444
+        volumeMounts:
+        - name: data
+          mountPath: /home/litecoin/.litecoin
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
