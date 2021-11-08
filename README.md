@@ -52,8 +52,8 @@ Here, I `grep` for litecoin tar.gz SHA256 line in the asc file, I choose the fir
 
 ### 5. Script grown-ups
 I love Python, to automate things when Bash is not enough. In the script `tools/vaultValues.py` you can find one example of one Python program I did to parse one Helm yaml chart and look for the secrets in one Hashicorp Vault and populate them. There are some tricky things like loop nested dictionary.
-I did in 18 months ago. Now I thing there are some  kind of _official_ solutions to do this, but not 2 years ago, so I did my own solution.  
-I will be happy to explain it in a tech meeting. Feel free to use it if you find it useful.
+I did it 18 months ago. Now I thing there are some  kind of _official_ solutions to do this, but not 2 years ago, so I did my own solution.  
+I will be happy to explain it in a tech meeting. Feel free to use it if you find useful.
 
 #### 6. Terraform lovers unite
 And I also loves Terraform and I work with it every day. Check `terraform` dir for the needed files.  
