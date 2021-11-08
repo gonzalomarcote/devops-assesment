@@ -13,9 +13,17 @@ RUN groupadd -r litecoin && useradd --no-log-init -r -g litecoin litecoin
 # Install required packages
 RUN set -ex \
 	&& apt-get -qq update \
-	&& apt-get -qq -y install gosu gnupg curl \
-	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/*
+	&& apt-get -qq -y install gosu gnupg curl software-properties-common
+
+# Update glibc package from testing due High CVE-2021-33574 vulnerability
+RUN add-apt-repository "deb http://httpredir.debian.org/debian testing main" \
+    && apt-get -qq update \
+    && apt-get -qq -t testing -y install --no-install-recommends libc6 libc6-dev libc6-dbg
+
+# Clean apt cache packages to make image lighter
+RUN apt-get clean \
+    && rm -rf /var/lib/apt \
+    && rm -rf /var/lib/dpkg
 
 # Download litecoin package
 RUN curl -s -o litecoin.tar.gz https://download.litecoin.org/litecoin-${LITECOIN_VERSION}/linux/litecoin-${LITECOIN_VERSION}-x86_64-linux-gnu.tar.gz
