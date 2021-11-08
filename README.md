@@ -55,6 +55,6 @@ I love Python, to automate things when Bash is not enough. In the script `tools/
 I did it 18 months ago. Now I thing there are some  kind of _official_ solutions to do this, but not 2 years ago, so I did my own solution.  
 I will be happy to explain it in a tech meeting. Feel free to use it if you find useful.
 
-#### 6. Terraform lovers unite
+### 6. Terraform lovers unite
 And I also loves Terraform and I work with it every day. Check `terraform` dir for the needed files.  
 Sufix is populated depending on the env by the terraform workspace (prod, dev, qa, etc).
